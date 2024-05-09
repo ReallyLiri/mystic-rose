@@ -41,7 +41,7 @@ const generateSvg = (size: number, points: number) => {
         if (x1 === x2 && y1 === y2) {
           return "";
         }
-        const color = `hsl(${rnd(360)}, ${rnd(100, 50)}%, ${rnd(90, 30)}%)`;
+        const color = `hsl(${rnd(40) + 300}, ${rnd(100, 50)}%, ${rnd(90, 30)}%)`;
         const width = rnd(30, 3) / 10;
         return `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${color}" stroke-width="${width}"></line>`;
       })
