@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import styled from "@emotion/styled";
 import { useWindowSize } from "@uidotdev/usehooks";
+import { TransformComponent, TransformWrapper } from "react-zoom-pan-pinch";
 
 const MIN_POINTS = 3;
 const MAX_POINTS = 42;
@@ -81,7 +82,11 @@ export const App = () => {
           onChange={(e) => setPoints(parseInt(e.target.value))}
         />
       </StyledLabel>
-      <StyledSvg ref={svgRef} viewBox={`0 0 ${height} ${width}`} />
+      <TransformWrapper>
+        <TransformComponent>
+          <StyledSvg ref={svgRef} viewBox={`0 0 ${height} ${width}`} />
+        </TransformComponent>
+      </TransformWrapper>
     </Container>
   );
 };

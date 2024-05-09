@@ -13,7 +13,8 @@
     "@emotion/styled": "^11.11.5",
     "@uidotdev/usehooks": "^2.4.1",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-zoom-pan-pinch": "^3.4.4"
   },
   "devDependencies": {
     "@types/react": "^18.2.66",
