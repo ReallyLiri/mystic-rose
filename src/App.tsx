@@ -11,6 +11,7 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  padding: 1rem;
 `;
 
 const StyledLabel = styled.div`
@@ -27,10 +28,10 @@ const StyledSvg = styled.svg`
   width: 95vw;
 `;
 
-const generateSvg = (size: number, points: number) => {
+const generateSvg = (size: number, numberOfPoints: number) => {
   const radius = size / 2;
-  const coordinates = [...new Array(points)].map((_, index) => {
-    const angle = 360 / points;
+  const coordinates = [...new Array(numberOfPoints)].map((_, index) => {
+    const angle = 360 / numberOfPoints;
     const radian = angle * (index + 1);
     return polarToCartesian(radius, radian);
   });
@@ -59,16 +60,22 @@ const polarToCartesian = (r: number, degrees: number) => {
 };
 
 export const App = () => {
-  const [points, setPoints] = useState(16);
+  const [numberOfPoints, setNumberOfPoints] = useState(16);
   const { height, width } = useWindowSize();
   const svgRef = useRef<SVGSVGElement>(null);
-  const roseHeight = (height || 1000) * 0.95;
+  const sizeSet = height && width;
+  const roseSize = sizeSet ? Math.min(height!, width!) * 0.95 : 0;
+  console.error({ height, width, roseSize });
 
   useEffect(() => {
-    if (svgRef.current) {
-      svgRef.current.innerHTML = generateSvg(roseHeight, points).join("");
+    if (sizeSet && svgRef.current) {
+      svgRef.current.innerHTML = generateSvg(roseSize, numberOfPoints).join("");
     }
-  }, [roseHeight, points]);
+  }, [roseSize, sizeSet, numberOfPoints]);
+
+  if (!sizeSet) {
+    return null;
+  }
 
   return (
     <Container>
@@ -78,8 +85,8 @@ export const App = () => {
           type="range"
           min={MIN_POINTS}
           max={MAX_POINTS}
-          value={points}
-          onChange={(e) => setPoints(parseInt(e.target.value))}
+          value={numberOfPoints}
+          onChange={(e) => setNumberOfPoints(parseInt(e.target.value))}
         />
       </StyledLabel>
       <TransformWrapper>
