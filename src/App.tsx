@@ -65,7 +65,6 @@ export const App = () => {
   const svgRef = useRef<SVGSVGElement>(null);
   const sizeSet = height && width;
   const roseSize = sizeSet ? Math.min(height!, width!) * 0.95 : 0;
-  console.error({ height, width, roseSize });
 
   useEffect(() => {
     if (sizeSet && svgRef.current) {
