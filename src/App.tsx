@@ -12,6 +12,7 @@ const Container = styled.div`
   align-items: center;
   justify-content: center;
   padding: 1rem;
+  width: 100vw;
 `;
 
 const StyledLabel = styled.div`
@@ -25,30 +26,31 @@ const StyledInput = styled.input`
 
 const StyledSvg = styled.svg`
   aspect-ratio: 1;
-  width: 95vw;
 `;
 
-const generateSvg = (size: number, numberOfPoints: number) => {
+const generateLines = (size: number, numberOfPoints: number) => {
   const radius = size / 2;
   const coordinates = [...new Array(numberOfPoints)].map((_, index) => {
     const angle = 360 / numberOfPoints;
     const radian = angle * (index + 1);
     return polarToCartesian(radius, radian);
   });
-  return coordinates.map((entry1) => {
-    const [x1, y1] = entry1;
-    return coordinates
-      .map((entry2) => {
-        const [x2, y2] = entry2;
-        if (x1 === x2 && y1 === y2) {
-          return "";
-        }
-        const color = `hsl(${rnd(40) + 300}, ${rnd(100, 50)}%, ${rnd(90, 30)}%)`;
-        const width = rnd(30, 3) / 10;
-        return `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${color}" stroke-width="${width}"></line>`;
-      })
-      .join("");
-  });
+  return coordinates
+    .map((entry1) => {
+      const [x1, y1] = entry1;
+      return coordinates
+        .map((entry2) => {
+          const [x2, y2] = entry2;
+          if (x1 === x2 && y1 === y2) {
+            return "";
+          }
+          const color = `hsl(${rnd(40) + 300}, ${rnd(100, 50)}%, ${rnd(90, 30)}%)`;
+          const width = rnd(30, 3) / 10;
+          return `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${color}" stroke-width="${width}"/>`;
+        })
+        .join("");
+    })
+    .join("");
 };
 
 const rnd = (max: number, min: number = 0) =>
@@ -64,11 +66,11 @@ export const App = () => {
   const { height, width } = useWindowSize();
   const svgRef = useRef<SVGSVGElement>(null);
   const sizeSet = height && width;
-  const roseSize = sizeSet ? Math.min(height!, width!) * 0.9 : 0;
+  const roseSize = sizeSet ? Math.min(height!, width!) * 0.85 : 0;
 
   useEffect(() => {
     if (sizeSet && svgRef.current) {
-      svgRef.current.innerHTML = generateSvg(roseSize, numberOfPoints).join("");
+      svgRef.current.innerHTML = generateLines(roseSize, numberOfPoints);
     }
   }, [roseSize, sizeSet, numberOfPoints]);
 
@@ -90,7 +92,12 @@ export const App = () => {
       </StyledLabel>
       <TransformWrapper>
         <TransformComponent>
-          <StyledSvg ref={svgRef} viewBox={`0 0 ${height} ${width}`} />
+          <StyledSvg
+            ref={svgRef}
+            height={height * 0.8}
+            width={width * 0.9}
+            viewBox={`0 0 ${roseSize} ${roseSize}`}
+          />
         </TransformComponent>
       </TransformWrapper>
     </Container>
