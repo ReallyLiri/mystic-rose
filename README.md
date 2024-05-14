@@ -4,4 +4,4 @@ A configurable [complete graph](https://en.wikipedia.org/wiki/Complete_graph) bu
 
 Live at [https://mystic-rose.netlify.app](https://mystic-rose.netlify.app)
 
-![screenshot](https://i.imgur.com/SnGDw9J.png)
+![screenshot](https://i.imgur.com/myFrOwS.gif)
