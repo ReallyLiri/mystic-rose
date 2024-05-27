@@ -41,7 +41,7 @@ const generateLines = (size: number, numberOfPoints: number) => {
       return coordinates
         .map((entry2) => {
           const [x2, y2] = entry2;
-          if (x1 === x2 && y1 === y2) {
+          if (x1 <= x2 && y1 <= y2) {
             return "";
           }
           const color = `hsl(${rnd(40) + 300}, ${rnd(100, 50)}%, ${rnd(90, 30)}%)`;
